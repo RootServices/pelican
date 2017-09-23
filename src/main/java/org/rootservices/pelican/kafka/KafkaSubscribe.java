@@ -32,7 +32,9 @@ public class KafkaSubscribe implements Subscribe {
             ConsumerRecords<String, String> records = consumer.poll(timeout);
             for (ConsumerRecord<String, String> record : records) {
                 try {
+                    logger.debug("received message");
                     msg = objectMapper.readValue(record.value(), new TypeReference<Map<String, String>>(){});
+                    logger.debug("returning message");
                     return msg;
                 } catch (IOException e) {
                     logger.error(e.getMessage(), e);

@@ -35,6 +35,9 @@ public class KafkaPublish implements Publish {
 
         Producer<String, byte[]> producer = new KafkaProducer<>(properties);
         producer.send(new ProducerRecord<>(topic, payload));
+        logger.debug("sent message");
+
         producer.close();
+        logger.debug("closed connection");
     }
 }
