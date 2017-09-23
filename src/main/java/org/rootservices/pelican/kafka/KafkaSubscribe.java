@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.rootservices.pelican.Subscribe;
 
 import java.io.IOException;
@@ -13,6 +15,8 @@ import java.util.Map;
 
 
 public class KafkaSubscribe implements Subscribe {
+    protected static Logger logger = LogManager.getLogger(KafkaSubscribe.class);
+
     private KafkaConsumer<String, String> consumer;
     private ObjectMapper objectMapper;
 
@@ -23,7 +27,7 @@ public class KafkaSubscribe implements Subscribe {
 
     @Override
     public Map<String, String> poll(long timeout) {
-        Map<String, String> msg = new HashMap<>();
+        Map<String, String> msg;
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(timeout);
             for (ConsumerRecord<String, String> record : records) {
@@ -31,7 +35,7 @@ public class KafkaSubscribe implements Subscribe {
                     msg = objectMapper.readValue(record.value(), new TypeReference<Map<String, String>>(){});
                     return msg;
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
             }
         }
