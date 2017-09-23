@@ -29,6 +29,7 @@ public class KafkaSubscribe implements Subscribe {
     public Map<String, String> poll(long timeout) {
         Map<String, String> msg;
         while (true) {
+            logger.debug("polling for message");
             ConsumerRecords<String, String> records = consumer.poll(timeout);
             for (ConsumerRecord<String, String> record : records) {
                 try {
