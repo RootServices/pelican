@@ -34,9 +34,9 @@ public class KafkaSubscribeTest {
 
         Map<String, String> actual = subject.poll(100);
 
-        assertThat(actual, is(notNullValue()));
-        assertThat(actual.size(), is(1));
-        assertThat(actual.get("test_key"), is("test_value"));
+        assertThat("subscriber did not get a message", actual, is(notNullValue()));
+        assertThat("message the subscriber got was empty", actual.size(), is(1));
+        assertThat("message has a unexpected value for key, test_key", actual.get("test_key"), is("test_value"));
     }
 
 }

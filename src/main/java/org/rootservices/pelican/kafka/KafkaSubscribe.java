@@ -26,15 +26,14 @@ public class KafkaSubscribe implements Subscribe {
         Map<String, String> msg = new HashMap<>();
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(timeout);
-            for (ConsumerRecord<String, String> record : records)
+            for (ConsumerRecord<String, String> record : records) {
                 try {
                     msg = objectMapper.readValue(record.value(), new TypeReference<Map<String, String>>(){});
                     return msg;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                // System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
+            }
         }
     }
 }
