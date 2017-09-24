@@ -8,6 +8,7 @@ import org.rootservices.pelican.config.AppConfig;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
@@ -33,11 +34,11 @@ public class KafkaSubscribeTest {
         Publish publish = appConfig.publish("p-1234");
         publish.send("test", message);
 
-        Map<String, String> actual = subject.poll(100);
+        List<Map<String, String>> actual = subject.poll(100);
 
         assertThat("subscriber did not get a message", actual, is(notNullValue()));
         assertThat("message the subscriber got was empty", actual.size(), is(1));
-        assertThat("message has a unexpected value for key, test_key", actual.get("test_key"), is("test_value"));
+        assertThat("message has a unexpected value for key, test_key", actual.get(0).get("test_key"), is("test_value"));
     }
 
 }

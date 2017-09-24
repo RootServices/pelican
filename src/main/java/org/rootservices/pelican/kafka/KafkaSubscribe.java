@@ -10,7 +10,9 @@ import org.apache.log4j.Logger;
 import org.rootservices.pelican.Subscribe;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -26,21 +28,26 @@ public class KafkaSubscribe implements Subscribe {
     }
 
     @Override
-    public Map<String, String> poll(long timeout) {
-        Map<String, String> msg;
+    public List<Map<String, String>> poll(long timeout) {
+        List<Map<String, String>> msgs = new ArrayList<>();
         while (true) {
+            msgs.clear();
+
             logger.debug("polling for message");
             ConsumerRecords<String, String> records = consumer.poll(timeout);
-            logger.debug("records: " + records);
+            logger.debug("records: " + records.count());
+
             for (ConsumerRecord<String, String> record : records) {
                 try {
-                    logger.debug("received message");
-                    msg = objectMapper.readValue(record.value(), new TypeReference<Map<String, String>>(){});
-                    logger.debug("returning message");
-                    return msg;
+                    Map<String, String> msg = objectMapper.readValue(record.value(), new TypeReference<Map<String, String>>(){});
+                    msgs.add(msg);
                 } catch (IOException e) {
                     logger.error(e.getMessage(), e);
                 }
+            }
+            if (msgs.size() > 0) {
+                logger.debug("returning messages");
+                return msgs;
             }
         }
     }
