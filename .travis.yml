@@ -18,3 +18,8 @@ before_install:
 
 script:
 - gradle cleanTest test -i
+
+
+after_failure:
+- echo "------- SERVER LOG -------"
+- cat kafka/logs/server.log
