@@ -15,12 +15,14 @@ before_install:
 - kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
 - sleep 10
 - kafka/bin/kafka-topics.sh --list --zookeeper localhost:2181
-- kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning &
+- kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning > kafka/logs/test_msgs.log &
 
 script:
 - gradle cleanTest test -i
 
 
 after_failure:
+- echo "------- TEST MESSAGES ------"
+- cat kafka/logs/test_msgs.log
 - echo "------- SERVER LOG -------"
 - cat kafka/logs/server.log
