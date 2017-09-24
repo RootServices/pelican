@@ -28,7 +28,7 @@ public class KafkaSubscribeTest {
         Map<String, String> message = new HashMap<>();
         message.put("test_key", "test_value");
 
-        Subscribe subject = appConfig.subscribe(Arrays.asList("test"), "s-1234", "test");
+        Subscribe subject = appConfig.subscribe(Arrays.asList("test"), "s-1234", "test-group");
 
         Publish publish = appConfig.publish("p-1234");
         publish.send("test", message);
