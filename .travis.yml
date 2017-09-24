@@ -14,7 +14,7 @@ before_install:
 - sleep 10
 - kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
 - sleep 10
-- bin/kafka-topics.sh --list --zookeeper localhost:2181
+- kafka/bin/kafka-topics.sh --list --zookeeper localhost:2181
 
 script:
 - gradle cleanTest test -i
