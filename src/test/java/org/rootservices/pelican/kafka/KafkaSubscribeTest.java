@@ -23,7 +23,7 @@ public class KafkaSubscribeTest {
     }
 
 
-    @Test(timeout=10000)
+    @Test(timeout=20000)
     public void pollShouldGetMessage() {
         Map<String, String> message = new HashMap<>();
         message.put("test_key", "test_value");
