@@ -31,6 +31,7 @@ public class KafkaSubscribe implements Subscribe {
         while (true) {
             logger.debug("polling for message");
             ConsumerRecords<String, String> records = consumer.poll(timeout);
+            logger.debug("records: " + records);
             for (ConsumerRecord<String, String> record : records) {
                 try {
                     logger.debug("received message");
