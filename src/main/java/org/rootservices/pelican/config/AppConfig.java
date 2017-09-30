@@ -40,10 +40,11 @@ public class AppConfig {
         return om;
     }
 
-    public Properties propertiesForPublish() {
+    public Properties propertiesForPublish(String clientId) {
         Properties props = new Properties();
         props.put(KafkaProps.SERVER.getValue(), messageQueueHost());
-        props.put(KafkaProps.ACK.getValue(), KafkaProps.SERVER.ALL.getValue());
+        props.put(KafkaProps.CLIENT_ID.getValue(), clientId);
+        props.put(KafkaProps.ACK.getValue(), KafkaProps.ALL.getValue());
         props.put(KafkaProps.RETRIES.getValue(), 0);
         props.put(KafkaProps.BATCH_SIZE.getValue(), 16384);
         props.put(KafkaProps.LINGER.getValue(), 1);
@@ -54,10 +55,11 @@ public class AppConfig {
         return props;
     }
 
-    public Properties propertiesForSubscribe(String consumerGroup) {
+    public Properties propertiesForSubscribe(String clientId, String consumerGroup) {
         Properties props = new Properties();
 
         props.put(KafkaProps.SERVER.getValue(), messageQueueHost());
+        props.put(KafkaProps.CLIENT_ID.getValue(), clientId);
         props.put(KafkaProps.GROUP_ID.getValue(), consumerGroup);
         props.put(KafkaProps.ENABLE_AUTO_COMMIT.getValue(), "true");
         props.put(KafkaProps.AUOT_COMMIT_INTERVAL.getValue(), "1000");
@@ -66,17 +68,17 @@ public class AppConfig {
 
         return props;
     }
-    public Publish publish() {
-        return new KafkaPublish(propertiesForPublish(), objectMapper());
+    public Publish publish(String clientId) {
+        return new KafkaPublish(propertiesForPublish(clientId), objectMapper());
     }
 
-    public KafkaConsumer<String, String> consumer(Collection<String> topics, String consumerGroup){
-        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(propertiesForSubscribe(consumerGroup));
+    public KafkaConsumer<String, String> consumer(Collection<String> topics, String clientId, String consumerGroup){
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(propertiesForSubscribe(clientId, consumerGroup));
         consumer.subscribe(topics);
         return consumer;
     }
 
-    public Subscribe subscribe(Collection<String> topics, String consumerGroup) {
-        return new KafkaSubscribe(consumer(topics, consumerGroup), objectMapper());
+    public Subscribe subscribe(Collection<String> topics, String clientId, String consumerGroup) {
+        return new KafkaSubscribe(consumer(topics, clientId, consumerGroup), objectMapper());
     }
 }

@@ -1,7 +1,8 @@
 package org.rootservices.pelican;
 
+import java.util.List;
 import java.util.Map;
 
 public interface Subscribe {
-    Map<String, String> poll(long timeout);
+    List<Map<String, String>> poll(long timeout);
 }

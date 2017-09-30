@@ -1,5 +1,6 @@
 package org.rootservices.pelican;
 
+import java.util.List;
 import java.util.Map;
 
 public abstract class Worker {
@@ -14,10 +15,10 @@ public abstract class Worker {
 
     public void work() {
         while(true) {
-            Map<String, String> message = subscribe.poll(timeout);
-            handleMessage(message);
+            List<Map<String, String>> msgs = subscribe.poll(timeout);
+            handleMessage(msgs);
         }
     }
 
-    abstract public void handleMessage(Map<String, String> message);
+    abstract public void handleMessage(List<Map<String, String>> msgs);
 }

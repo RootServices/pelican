@@ -2,6 +2,7 @@ package org.rootservices.pelican.kafka;
 
 public enum KafkaProps {
     SERVER ("bootstrap.servers"),
+    CLIENT_ID ("client.id"),
     ACK ("acks"),
     ALL ("all"),
     RETRIES("retries"),
