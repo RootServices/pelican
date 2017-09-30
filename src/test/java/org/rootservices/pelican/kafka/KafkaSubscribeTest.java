@@ -29,11 +29,11 @@ public class KafkaSubscribeTest {
         Map<String, String> message = new HashMap<>();
         message.put("test_key", "test_value");
 
-        String subscribeClientId = "pelican-subscribe-integration-test-1-";
-        String consumerGroup = "pelican-consumer-group-integration-test-1-";
+        String subscribeClientId = "pelican-subscribe-integration-test-1";
+        String consumerGroup = "pelican-consumer-group-integration-test-1";
         Subscribe subject = appConfig.subscribe(Arrays.asList("test"), subscribeClientId, consumerGroup);
 
-        String publishClientId = "pelican-publisher-integration-test-1-";
+        String publishClientId = "pelican-publisher-integration-test-1";
         Publish publish = appConfig.publish(publishClientId);
         publish.send("test", message);
 
