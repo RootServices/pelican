@@ -15,7 +15,8 @@ public enum KafkaProps {
     VALUE_DESERIALIZER ("value.deserializer"),
     GROUP_ID ("group.id"),
     ENABLE_AUTO_COMMIT ("enable.auto.commit"),
-    AUOT_COMMIT_INTERVAL ("auto.commit.interval.ms");
+    AUTO_COMMIT_INTERVAL ("auto.commit.interval.ms"),
+    AUTO_OFFSET_RESET ("auto.offset.reset");
 
     private String value;
 
