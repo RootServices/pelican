@@ -5,4 +5,5 @@ import java.util.Map;
 
 public interface Subscribe {
     List<Map<String, String>> poll(long timeout);
+    void processed();
 }

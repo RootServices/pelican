@@ -64,6 +64,7 @@ public class AppConfig {
         props.put(KafkaProps.ENABLE_AUTO_COMMIT.getValue(), "true");
         props.put(KafkaProps.AUTO_COMMIT_INTERVAL.getValue(), "1000");
         props.put(KafkaProps.AUTO_OFFSET_RESET.getValue(), "earliest");
+        props.put(KafkaProps.MAX_POLL_RECORDS.getValue(), "1");
         props.put(KafkaProps.KEY_DESERIALIZER.getValue(), "org.apache.kafka.common.serialization.StringDeserializer");
         props.put(KafkaProps.VALUE_DESERIALIZER.getValue(), "org.apache.kafka.common.serialization.StringDeserializer");
 

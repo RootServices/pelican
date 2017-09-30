@@ -40,6 +40,7 @@ public class KafkaSubscribe implements Subscribe {
 
             for (ConsumerRecord<String, String> record : records) {
                 try {
+                    logger.debug("msg offset: " + record.offset());
                     Map<String, String> msg = objectMapper.readValue(record.value(), new TypeReference<Map<String, String>>(){});
                     msgs.add(msg);
                 } catch (IOException e) {
@@ -51,5 +52,10 @@ public class KafkaSubscribe implements Subscribe {
                 return msgs;
             }
         }
+    }
+
+    @Override
+    public void processed() {
+        consumer.commitSync();
     }
 }

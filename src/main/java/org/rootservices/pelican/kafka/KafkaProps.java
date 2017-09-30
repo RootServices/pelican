@@ -16,7 +16,8 @@ public enum KafkaProps {
     GROUP_ID ("group.id"),
     ENABLE_AUTO_COMMIT ("enable.auto.commit"),
     AUTO_COMMIT_INTERVAL ("auto.commit.interval.ms"),
-    AUTO_OFFSET_RESET ("auto.offset.reset");
+    AUTO_OFFSET_RESET ("auto.offset.reset"),
+    MAX_POLL_RECORDS ("max.poll.records");
 
     private String value;
 
