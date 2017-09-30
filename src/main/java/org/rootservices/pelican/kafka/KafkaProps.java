@@ -2,6 +2,7 @@ package org.rootservices.pelican.kafka;
 
 public enum KafkaProps {
     SERVER ("bootstrap.servers"),
+    CLIENT_ID ("client.id"),
     ACK ("acks"),
     ALL ("all"),
     RETRIES("retries"),
@@ -14,7 +15,9 @@ public enum KafkaProps {
     VALUE_DESERIALIZER ("value.deserializer"),
     GROUP_ID ("group.id"),
     ENABLE_AUTO_COMMIT ("enable.auto.commit"),
-    AUOT_COMMIT_INTERVAL ("auto.commit.interval.ms");
+    AUTO_COMMIT_INTERVAL ("auto.commit.interval.ms"),
+    AUTO_OFFSET_RESET ("auto.offset.reset"),
+    MAX_POLL_RECORDS ("max.poll.records");
 
     private String value;
 

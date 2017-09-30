@@ -5,14 +5,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.TopicPartition;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.rootservices.pelican.Subscribe;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 public class KafkaSubscribe implements Subscribe {
+    protected static Logger logger = LogManager.getLogger(KafkaSubscribe.class);
+
     private KafkaConsumer<String, String> consumer;
     private ObjectMapper objectMapper;
 
@@ -22,19 +26,36 @@ public class KafkaSubscribe implements Subscribe {
     }
 
     @Override
-    public Map<String, String> poll(long timeout) {
-        Map<String, String> msg = new HashMap<>();
+    public List<Map<String, String>> poll(long timeout) {
+        List<Map<String, String>> msgs = new ArrayList<>();
         while (true) {
-            ConsumerRecords<String, String> records = consumer.poll(timeout);
-            for (ConsumerRecord<String, String> record : records)
-                try {
-                    msg = objectMapper.readValue(record.value(), new TypeReference<Map<String, String>>(){});
-                    return msg;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            msgs.clear();
 
-                // System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
+            Set<TopicPartition> partitions = consumer.assignment();
+            logger.debug("partitions: " + partitions);
+
+            logger.debug("polling for message");
+            ConsumerRecords<String, String> records = consumer.poll(timeout);
+            logger.debug("records: " + records.count());
+
+            for (ConsumerRecord<String, String> record : records) {
+                try {
+                    logger.debug("msg offset: " + record.offset());
+                    Map<String, String> msg = objectMapper.readValue(record.value(), new TypeReference<Map<String, String>>(){});
+                    msgs.add(msg);
+                } catch (IOException e) {
+                    logger.error(e.getMessage(), e);
+                }
+            }
+            if (msgs.size() > 0) {
+                logger.debug("returning messages");
+                return msgs;
+            }
         }
+    }
+
+    @Override
+    public void processed() {
+        consumer.commitSync();
     }
 }

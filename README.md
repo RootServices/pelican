@@ -1,19 +1,50 @@
 # pelican
 A interface that can implement publishing and consuming messages from various message queue platforms.
 
-https://github.com/junit-team/junit5-samples/blob/master/junit5-vanilla-gradle/build.gradle
-
 Environment Vars
 -----------------
 ```bash
-export MESSAGE_QUEUE_HOST='localhost:9092
+export MESSAGE_QUEUE_HOST='localhost:9092'
 ```
 
 Executing the tests
 -------------------
-The tests are integration tests and depend that the various message queues are running.
+The tests are integration tests and depend that the various message queues are running. See, "Setting up Kafka" section below.
+
+```bash
+gradle test
+```
+
+How to Publish
+---------------
+
+```java
+AppConfig appConfig = new AppConfig();
+
+Map<String, String> message = new HashMap<>();
+message.put("test_key", "test_value");
+
+Publish publish = appConfig.publish();
+
+String topic = "test";
+publish.send(topic, message);
+```
+
+How to Subscribe
+----------------
+
+```java
+AppConfig appConfig = new AppConfig();
 
 
+List<String> topics = Arrays.asList("test");
+String consumerGroup = "test";
+
+Subscribe subject = appConfig.subscribe(topics, consumerGroup);
+
+Long timeout = 100;
+Map<String, String> message = subject.poll(timeout);
+```
 
 Setting up [Kafka](https://kafka.apache.org/)
 ------------------

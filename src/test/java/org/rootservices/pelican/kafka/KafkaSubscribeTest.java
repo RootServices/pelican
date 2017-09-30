@@ -8,6 +8,7 @@ import org.rootservices.pelican.config.AppConfig;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
@@ -22,21 +23,27 @@ public class KafkaSubscribeTest {
         appConfig = new AppConfig();
     }
 
-    @Test
+
+    @Test(timeout=20000)
     public void pollShouldGetMessage() {
         Map<String, String> message = new HashMap<>();
         message.put("test_key", "test_value");
 
-        Subscribe subject = appConfig.subscribe(Arrays.asList("test"), "test");
+        String subscribeClientId = "pelican-subscribe-integration-test-1";
+        String consumerGroup = "pelican-consumer-group-integration-test-1";
+        Subscribe subject = appConfig.subscribe(Arrays.asList("test"), subscribeClientId, consumerGroup);
 
-        Publish publish = appConfig.publish();
+        String publishClientId = "pelican-publisher-integration-test-1";
+        Publish publish = appConfig.publish(publishClientId);
         publish.send("test", message);
 
-        Map<String, String> actual = subject.poll(100);
+        List<Map<String, String>> actual = subject.poll(100);
 
-        assertThat(actual, is(notNullValue()));
-        assertThat(actual.size(), is(1));
-        assertThat(actual.get("test_key"), is("test_value"));
+        subject.processed();
+
+        assertThat("subscriber did not get a message", actual, is(notNullValue()));
+        assertThat("message the subscriber got was empty", actual.size(), is(1));
+        assertThat("message has a unexpected value for key, test_key", actual.get(0).get("test_key"), is("test_value"));
     }
 
 }
