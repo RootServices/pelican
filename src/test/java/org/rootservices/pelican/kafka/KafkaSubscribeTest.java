@@ -29,9 +29,12 @@ public class KafkaSubscribeTest {
         Map<String, String> message = new HashMap<>();
         message.put("test_key", "test_value");
 
-        Subscribe subject = appConfig.subscribe(Arrays.asList("test"), "s-1234", "test-group");
+        String subscribeClientId = "pelican-subscribe-integration-test-1-";
+        String consumerGroup = "pelican-consumer-group-integration-test-1-";
+        Subscribe subject = appConfig.subscribe(Arrays.asList("test"), subscribeClientId, consumerGroup);
 
-        Publish publish = appConfig.publish("p-1234");
+        String publishClientId = "pelican-publisher-integration-test-1-";
+        Publish publish = appConfig.publish(publishClientId);
         publish.send("test", message);
 
         List<Map<String, String>> actual = subject.poll(100);
