@@ -43,7 +43,10 @@ String consumerGroup = "test";
 Subscribe subject = appConfig.subscribe(topics, consumerGroup);
 
 Long timeout = 100;
-Map<String, String> message = subject.poll(timeout);
+List<Map<String, String>> messages = subject.poll(timeout);
+
+// tell the queue the record has been processed.
+subject.processed();
 ```
 
 Setting up [Kafka](https://kafka.apache.org/)
@@ -86,4 +89,10 @@ $ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test -
 send messages
 ```bash
 $ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+```
+
+Upload the JAR
+--------------
+```bash
+$ gradle clean signArchives uploadArchives
 ```
