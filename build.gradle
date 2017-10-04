@@ -49,9 +49,9 @@ signing {
 uploadArchives {
     repositories {
         mavenDeployer {
-            if(!ossrhUser) {
-                ossrhUser = 'wrongUser'
-                ossrhPassword = 'wrongPassword'
+            if(!project.ext.properties.containsKey("ossrhUser")) {
+                project.ext.ossrhUser = 'wrongUser'
+                project.ext.ossrhPassword = 'wrongPassword'
             }
 
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
