@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rootservices.pelican.Publish;
 import org.rootservices.pelican.Subscribe;
-import org.rootservices.pelican.config.AppConfig;
+import org.rootservices.pelican.config.PelicanAppConfig;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,11 +16,11 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.*;
 
 public class KafkaSubscribeTest {
-    private AppConfig appConfig;
+    private PelicanAppConfig appConfig;
 
     @Before
     public void setUp() {
-        appConfig = new AppConfig();
+        appConfig = new PelicanAppConfig();
     }
 
 

@@ -8,7 +8,7 @@ public abstract class Worker {
     private Subscribe subscribe;
     private Long timeout;
 
-    Worker(Subscribe subscribe, Long timeout) {
+    public Worker(Subscribe subscribe, Long timeout) {
         this.subscribe = subscribe;
         this.timeout = timeout;
     }
