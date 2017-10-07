@@ -16,7 +16,7 @@ import org.rootservices.pelican.kafka.KafkaSubscribe;
 import java.util.Collection;
 import java.util.Properties;
 
-public class AppConfig {
+public class PelicanAppConfig {
     private static String MQ_ENV_VAR = "MESSAGE_QUEUE_HOST";
     private static String EMPTY = "";
     private static String MQ_ENV_VAR_INVALID = "Environment Variable, MESSAGE_QUEUE_HOST is invalid";
