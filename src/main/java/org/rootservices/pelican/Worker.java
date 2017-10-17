@@ -5,8 +5,8 @@ import java.util.Map;
 
 public abstract class Worker {
 
-    private Subscribe subscribe;
-    private Long timeout;
+    protected Subscribe subscribe;
+    protected Long timeout;
 
     public Worker(Subscribe subscribe, Long timeout) {
         this.subscribe = subscribe;
