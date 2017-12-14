@@ -8,6 +8,7 @@ apply plugin: 'java'
 apply plugin: 'signing'
 apply plugin: 'maven'
 sourceCompatibility = 1.8
+
 version = '1.0-SNAPSHOT'
 project.group = 'org.rootservices'
 
@@ -63,20 +64,36 @@ uploadArchives {
                 authentication(userName: ossrhUser, password: ossrhPassword)
             }
             pom.project {
-                groupId 'org.rootservices'
-                artifactId project.name
-                version project.version
                 name project.name
-                description project.description
                 packaging 'jar'
+                description 'framework to publish and consume messages'
                 url 'https://github.com/RootServices/pelican'
+
+                scm {
+                    connection 'git@github.com:RootServices/pelican.git'
+                    developerConnection 'git@github.com:RootServices/pelican.git'
+                    url 'https://github.com/RootServices/pelican'
+                }
+
+                licenses {
+                    license {
+                        name 'The MIT License (MIT)'
+                        url 'https://github.com/RootServices/pelican/blob/development/LICENSE'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'tmackenzie'
+                        name 'Tom MacKenzie'
+                        email 'tom@rootservices.org'
+                    }
+                }
             }
         }
     }
 }
 
-task getHomeDir {
-    doLast {
-        println gradle.gradleHomeDir
-    }
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.4'
 }
