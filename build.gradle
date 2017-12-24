@@ -13,7 +13,7 @@ version = '1.0-SNAPSHOT'
 project.group = 'org.rootservices'
 
 ext{
-    kafkaVersion = '0.11.0.1'
+    kafkaVersion = '1.0.0'
     jacksonVersion = '2.8.8'
     junitVersion = '5.0.0'
 }
@@ -28,7 +28,7 @@ configurations {
 }
 
 dependencies {
-    compile group: 'org.apache.kafka', name: 'kafka-clients', version: '0.11.0.1'
+    compile "org.apache.kafka:kafka-clients:${kafkaVersion}"
 
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core',  version: '2.8.8'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind',  version: '2.8.8'

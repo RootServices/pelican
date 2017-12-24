@@ -1,9 +1,12 @@
 FROM rs/kafka
 
-COPY run_zookeeper.sh /data/run_zookeeper.sh
+RUN \
+    mkdir -p /data/scripts/
+
+COPY run_zookeeper.sh /data/scripts/run_zookeeper.sh
 
 RUN \
-    chmod +x /data/run_zookeeper.sh
+    chmod +x /data/scripts/run_zookeeper.sh
 
 EXPOSE 2181
 

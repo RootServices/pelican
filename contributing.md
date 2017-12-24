@@ -1,5 +1,6 @@
 # Contributing
 
+
 ## pelican-build container
 *This will be deprecated soon*
 ```
@@ -13,7 +14,7 @@ $ chmod +x run_kafka.sh
 $ ./run_kafka.sh
 ```
 
-### create the test topic
+### creatssthe test topic
 ```
 $ $KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
 ```
@@ -37,6 +38,9 @@ docker build docker/kafka-broker -t rs/kafka-broker
 $ docker network create rs
 $ docker run -it -p 2181:2181 -t --name zookeeper --net rs rs/zookeeper
 $ docker run -it -p 9092:9092 -t --name broker --net rs rs/kafka-broker
+$ docker network connect rs zookeeper
+$ docker network connect rs broker
+
 ```
 
 ### After they are stopped..

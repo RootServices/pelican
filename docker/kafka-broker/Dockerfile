@@ -1,14 +1,15 @@
 FROM rs/kafka
 
-COPY run_kafka.sh /data/run_kafka.sh
 
 RUN \
-    mkdir /data/config
+    mkdir /data/config && \
+    mkdir /data/scripts
 
+COPY run_kafka.sh /data/scripts/run_kafka.sh
 COPY server.properties /data/config/server.properties
 
 RUN \
-    chmod +x /data/run_kafka.sh
+    chmod +x /data/scripts/run_kafka.sh
 
 EXPOSE 9092
 
