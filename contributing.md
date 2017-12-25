@@ -5,16 +5,16 @@
 *This will be deprecated soon*
 ```
 docker build docker/pelican-build -t pelican-build
-docker run -i -t pelican-build
+docker run -it -p 2181:2181 -p 9092:9092 --hostname localhost -t rs/pelican-build
 ```
 
 ### Run Kafka in pelican-build.
 ```bash
-$ chmod +x run_kafka.sh
-$ ./run_kafka.sh
+$ ./scripts/run_zookeeper.sh
+$ ./scripts/run_kafka.sh
 ```
 
-### creatssthe test topic
+### creat the test topic
 ```
 $ $KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
 ```

@@ -1,13 +1,15 @@
-FROM rs/zookeeper as zk
-FROM rs/kafka-broker as broker
-
 FROM rs/kafka
 
 RUN \
-    mkdir -p /build/rootservices/scripts
+    mkdir -p /build/rootservices/scripts && \
+    mkdir -p /build/rootservices/config
 
-COPY --from=zk /data/scripts/run_zookeeper.sh /build/rootservices/scripts/run_zookeeper.sh
-COPY --from=broker /data/scripts/run_kafka.sh /build/rootservices/scripts/run_kafka.sh
+COPY scripts/run_zookeeper.sh /build/rootservices/scripts/run_zookeeper.sh
+COPY scripts/run_kafka.sh /build/rootservices/scripts/run_kafka.sh
+COPY config/server.properties /build/rootservices/config/server.properties
+
+RUN \
+    chmod +x /build/rootservices/scripts/*.sh
 
 ARG GRADLE_VERSION=4.4
 ARG GRADLE_HOME="/opt/gradle"
@@ -27,7 +29,7 @@ ENV GRADLE_HOME ${GRADLE_HOME}
 ENV MESSAGE_QUEUE_HOST='localhost:9092'
 
 # Define working directory.
-WORKDIR /build/rootservices/pelican
+WORKDIR /build/rootservices
 
 EXPOSE 2181 9092
 
