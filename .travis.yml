@@ -20,6 +20,8 @@ before_install:
 install:
 - gradle assemble -x signArchives
 
+script:
+- ./gradlew check -x signArchives -i
 
 after_failure:
 - echo "------- TEST MESSAGES ------"
