@@ -15,13 +15,16 @@ before_install:
 - kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
 - sleep 10
 - kafka/bin/kafka-topics.sh --list --zookeeper localhost:2181
-- kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning > kafka/logs/test_msgs.log &
 
 install:
 - gradle assemble -x signArchives
 
 script:
 - ./gradlew check -x signArchives -i
+
+after_success:
+- kafka/bin/kafka-server-stop.sh
+- kafka/bin/zookeeper-server-stop.sh
 
 after_failure:
 - echo "------- TEST MESSAGES ------"
