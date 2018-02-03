@@ -36,8 +36,8 @@ docker build docker/kafka-broker -t rs/kafka-broker
 ### run zookeeper and broker locally with user-defined network.
 ```
 $ docker network create rs
-$ docker run -it -p 2181:2181 -t --name zookeeper --net rs rs/zookeeper
-$ docker run -it -p 9092:9092 -t --name broker --net rs rs/kafka-broker
+$ docker run -d -p 2181:2181 -t --name zookeeper --net rs rs/zookeeper
+$ docker run -d -p 9092:9092 -t --name broker --net rs rs/kafka-broker
 $ docker network connect rs zookeeper
 $ docker network connect rs broker
 
