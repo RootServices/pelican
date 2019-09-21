@@ -1,16 +1,13 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-}
-
 apply plugin: 'java'
+apply plugin: 'maven-publish'
 apply plugin: 'signing'
-apply plugin: 'maven'
-sourceCompatibility = 1.8
 
-version = '1.0-SNAPSHOT'
+sourceCompatibility = 12
+targetCompatibility = 12
+
+version = '1.1-SNAPSHOT'
 project.group = 'org.rootservices'
+archivesBaseName = "pelican"
 
 ext{
     kafkaVersion = '1.0.0'
@@ -18,7 +15,15 @@ ext{
     junitVersion = '5.0.0'
 }
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
 repositories {
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven { url "https://oss.sonatype.org/content/repositories/releases" }
     mavenCentral()
     mavenLocal()
 }
@@ -44,56 +49,78 @@ dependencies {
     deployerJars "org.apache.maven.wagon:wagon-http:2.2"
 }
 
-signing {
-    sign configurations.archives
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier = 'sources'
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            if(!project.ext.properties.containsKey("ossrhUser")) {
-                project.ext.ossrhUser = 'wrongUser'
-                project.ext.ossrhPassword = 'wrongPassword'
-            }
+task javadocJar(type: Jar) {
+    from javadoc
+    archiveClassifier = 'javadoc'
+}
 
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
-                authentication(userName: ossrhUser, password: ossrhPassword)
-            }
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUser, password: ossrhPassword)
-            }
-            pom.project {
-                name project.name
-                packaging 'jar'
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'pelican'
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom {
+                name = 'pelican'
+                packaging = 'jar'
                 description 'framework to publish and consume messages'
-                url 'https://github.com/RootServices/pelican'
+                url = 'https://github.com/RootServices/pelican'
 
                 scm {
-                    connection 'git@github.com:RootServices/pelican.git'
-                    developerConnection 'git@github.com:RootServices/pelican.git'
-                    url 'https://github.com/RootServices/pelican'
+                    connection = 'git@github.com:RootServices/pelican.git'
+                    developerConnection = 'git@github.com:RootServices/pelican.git'
+                    url = 'https://github.com/RootServices/otter'
                 }
 
                 licenses {
                     license {
-                        name 'The MIT License (MIT)'
-                        url 'https://github.com/RootServices/pelican/blob/development/LICENSE'
+                        name = 'The MIT License (MIT)'
+                        url = 'https://github.com/RootServices/pelican/blob/development/LICENSE'
                     }
                 }
 
                 developers {
                     developer {
-                        id 'tmackenzie'
-                        name 'Tom MacKenzie'
-                        email 'tom@rootservices.org'
+                        id = 'tmackenzie'
+                        name = 'Tom MacKenzie'
+                        email = 'tom@rootservices.org'
                     }
                 }
             }
         }
     }
+    repositories {
+        maven {
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            if(!project.ext.properties.containsKey("ossrhUser")) {
+                project.ext.ossrhUser = 'wrongUser'
+                project.ext.ossrhPassword = 'wrongPassword'
+            }
+            credentials {
+                username = ossrhUser
+                password =ossrhPassword
+            }
+        }
+    }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.4'
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
 }

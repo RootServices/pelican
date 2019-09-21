@@ -2,7 +2,7 @@ sudo: false
 language: java
 
 jdk:
-  - oraclejdk8
+  - oraclejdk12
 
 before_install:
 - export MESSAGE_QUEUE_HOST='localhost:9092'
