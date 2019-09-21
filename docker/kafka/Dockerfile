@@ -9,7 +9,7 @@ RUN  \
     apk add --no-cache openjdk8
 
 ARG KAFKA_HOME="/opt/kafka"
-ARG KAFKA_VERSION=1.0.0
+ARG KAFKA_VERSION=2.3.0
 ARG KAFKA_SCALA_VERSION=2.11
 ARG USER_HOME_DIR="/root"
 

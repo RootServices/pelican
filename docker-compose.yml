@@ -1,0 +1,37 @@
+version: '3'
+services:
+
+  kafka:
+    container_name: kafka
+    image: rs/kafka
+    build:
+      context: .
+      dockerfile: docker/kafka/Dockerfile
+    networks:
+      - pelican
+
+  zookeeper:
+    container_name: zookeeper
+    image: rs/zookeeper
+    build:
+      context: docker/zookeeper
+      dockerfile: Dockerfile
+    ports:
+      - 2181:2181
+    networks:
+      - pelican
+
+  kafka-server:
+    container_name: kafka-server
+    image: rs/kafka-server
+    build:
+      context: docker/kafka-server
+      dockerfile: Dockerfile
+    ports:
+      - 9092:9092
+    networks:
+      - pelican
+
+networks:
+  pelican:
+    driver: bridge
