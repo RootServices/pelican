@@ -12,6 +12,4 @@ COPY server.properties /data/config/server.properties
 RUN \
     chmod +x /data/scripts/run_kafka.sh
 
-EXPOSE 9092
-
 CMD ["/bin/sh", "/data/scripts/run_kafka.sh"]

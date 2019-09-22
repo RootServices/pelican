@@ -2,11 +2,11 @@ sudo: false
 language: java
 
 jdk:
-  - oraclejdk8
+  - oraclejdk12
 
 before_install:
 - export MESSAGE_QUEUE_HOST='localhost:9092'
-- wget http://apache.claz.org/kafka/1.0.0/kafka_2.11-1.0.0.tgz -O kafka.tgz
+- wget http://apache.claz.org/kafka/2.3.0/kafka_2.11-2.3.0.tgz -O kafka.tgz
 - mkdir -p kafka && tar xzf kafka.tgz -C kafka --strip-components 1
 - nohup bash -c "cd kafka && bin/zookeeper-server-start.sh config/zookeeper.properties &"
 - sleep 10
@@ -16,11 +16,8 @@ before_install:
 - sleep 10
 - kafka/bin/kafka-topics.sh --list --zookeeper localhost:2181
 
-install:
-- gradle assemble -x signArchives
-
 script:
-- ./gradlew check -x signArchives -i
+- ./gradlew clean test
 
 after_success:
 - kafka/bin/kafka-server-stop.sh

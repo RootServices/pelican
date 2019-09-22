@@ -1,14 +1,15 @@
 package org.rootservices.pelican;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
 public abstract class Worker {
 
     protected Subscribe subscribe;
-    protected Long timeout;
+    protected Duration timeout;
 
-    public Worker(Subscribe subscribe, Long timeout) {
+    public Worker(Subscribe subscribe, Duration timeout) {
         this.subscribe = subscribe;
         this.timeout = timeout;
     }

@@ -24,3 +24,6 @@ target/*
 out
 
 logs
+
+# docker-compose env files
+*.env

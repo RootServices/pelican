@@ -1,9 +1,10 @@
 package org.rootservices.pelican;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
 public interface Subscribe {
-    List<Map<String, String>> poll(long timeout);
+    List<Map<String, String>> poll(Duration timeout);
     void processed();
 }

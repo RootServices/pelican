@@ -1,24 +1,30 @@
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+sourceCompatibility = 12
+targetCompatibility = 12
+
+version = '1.1-SNAPSHOT'
+project.group = 'org.rootservices'
+archivesBaseName = "pelican"
+
+ext{
+    kafkaVersion = '2.3.0'
+    jacksonVersion = '2.9.9'
+    log4jVersion = '2.12.0'
+    junitVersion = '5.0.0'
+}
+
 buildscript {
     repositories {
         mavenCentral()
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'signing'
-apply plugin: 'maven'
-sourceCompatibility = 1.8
-
-version = '1.0-SNAPSHOT'
-project.group = 'org.rootservices'
-
-ext{
-    kafkaVersion = '1.0.0'
-    jacksonVersion = '2.8.8'
-    junitVersion = '5.0.0'
-}
-
 repositories {
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven { url "https://oss.sonatype.org/content/repositories/releases" }
     mavenCentral()
     mavenLocal()
 }
@@ -30,70 +36,93 @@ configurations {
 dependencies {
     compile "org.apache.kafka:kafka-clients:${kafkaVersion}"
 
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core',  version: '2.8.8'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind',  version: '2.8.8'
-    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8',  version: '2.8.8'
-    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310',  version: '2.8.8'
-
-    compile group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: '2.7'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.7'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.7'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.7'
+    compile "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
+    compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
+    compile "com.fasterxml.jackson.module:jackson-module-afterburner:${jacksonVersion}"
+    
+    compile "org.slf4j:slf4j-simple:1.7.26"
+    compile "org.apache.logging.log4j:log4j-1.2-api:${log4jVersion}"
+    compile "org.apache.logging.log4j:log4j-api:${log4jVersion}"
+    compile "org.apache.logging.log4j:log4j-core:${log4jVersion}"
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     deployerJars "org.apache.maven.wagon:wagon-http:2.2"
 }
 
-signing {
-    sign configurations.archives
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier = 'sources'
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            if(!project.ext.properties.containsKey("ossrhUser")) {
-                project.ext.ossrhUser = 'wrongUser'
-                project.ext.ossrhPassword = 'wrongPassword'
-            }
+task javadocJar(type: Jar) {
+    from javadoc
+    archiveClassifier = 'javadoc'
+}
 
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
-                authentication(userName: ossrhUser, password: ossrhPassword)
-            }
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUser, password: ossrhPassword)
-            }
-            pom.project {
-                name project.name
-                packaging 'jar'
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'pelican'
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom {
+                name = 'pelican'
+                packaging = 'jar'
                 description 'framework to publish and consume messages'
-                url 'https://github.com/RootServices/pelican'
+                url = 'https://github.com/RootServices/pelican'
 
                 scm {
-                    connection 'git@github.com:RootServices/pelican.git'
-                    developerConnection 'git@github.com:RootServices/pelican.git'
-                    url 'https://github.com/RootServices/pelican'
+                    connection = 'git@github.com:RootServices/pelican.git'
+                    developerConnection = 'git@github.com:RootServices/pelican.git'
+                    url = 'https://github.com/RootServices/otter'
                 }
 
                 licenses {
                     license {
-                        name 'The MIT License (MIT)'
-                        url 'https://github.com/RootServices/pelican/blob/development/LICENSE'
+                        name = 'The MIT License (MIT)'
+                        url = 'https://github.com/RootServices/pelican/blob/development/LICENSE'
                     }
                 }
 
                 developers {
                     developer {
-                        id 'tmackenzie'
-                        name 'Tom MacKenzie'
-                        email 'tom@rootservices.org'
+                        id = 'tmackenzie'
+                        name = 'Tom MacKenzie'
+                        email = 'tom@rootservices.org'
                     }
                 }
             }
         }
     }
+    repositories {
+        maven {
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            if(!project.ext.properties.containsKey("ossrhUser")) {
+                project.ext.ossrhUser = 'wrongUser'
+                project.ext.ossrhPassword = 'wrongPassword'
+            }
+            credentials {
+                username = ossrhUser
+                password =ossrhPassword
+            }
+        }
+    }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.4'
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
 }
