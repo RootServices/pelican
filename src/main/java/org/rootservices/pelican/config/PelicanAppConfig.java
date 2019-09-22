@@ -20,13 +20,24 @@ public class PelicanAppConfig {
     private static String MQ_ENV_VAR = "MESSAGE_QUEUE_HOST";
     private static String EMPTY = "";
     private static String MQ_ENV_VAR_INVALID = "Environment Variable, MESSAGE_QUEUE_HOST is invalid";
+    private static String host;
+
+    /**
+     * Set the host to connect for publishing and subscribing.
+     * @param host such as, localhost:9092
+     */
+    public void setMessageQueueHost(String host) {
+        this.host = host;
+    }
 
     public String messageQueueHost() {
-        String host = System.getenv(MQ_ENV_VAR);
-        if (host == null || host.equals(EMPTY)) {
-            throw new RuntimeException(MQ_ENV_VAR_INVALID);
+        if (this.host == null || this.host.isEmpty() ) {
+            this.host = System.getenv(MQ_ENV_VAR);
+            if (host == null || host.equals(EMPTY)) {
+                throw new RuntimeException(MQ_ENV_VAR_INVALID);
+            }
         }
-        return host;
+        return this.host;
     }
 
     public ObjectMapper objectMapper() {

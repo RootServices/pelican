@@ -1,9 +1,9 @@
 
 build-docker:
-	docker-compose build
+	docker-compose up --no-start
 
 start:
-	docker-compose up -d
+	docker-compose start zookeeper kafka-broker
 
 stop:
 	docker-compose stop

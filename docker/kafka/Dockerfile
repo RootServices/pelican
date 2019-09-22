@@ -1,12 +1,9 @@
 FROM alpine
 
-ENV JAVA_VERSION 8u141
-ENV JAVA_ALPINE_VERSION 8.141.15-r0
-
 RUN  \
     apk update && \
     apk upgrade && \
-    apk add --no-cache openjdk8
+    apk add --no-cache openjdk11
 
 ARG KAFKA_HOME="/opt/kafka"
 ARG KAFKA_VERSION=2.3.0

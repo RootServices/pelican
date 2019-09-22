@@ -10,8 +10,9 @@ project.group = 'org.rootservices'
 archivesBaseName = "pelican"
 
 ext{
-    kafkaVersion = '1.0.0'
-    jacksonVersion = '2.8.8'
+    kafkaVersion = '2.3.0'
+    jacksonVersion = '2.9.9'
+    log4jVersion = '2.12.0'
     junitVersion = '5.0.0'
 }
 
@@ -35,15 +36,16 @@ configurations {
 dependencies {
     compile "org.apache.kafka:kafka-clients:${kafkaVersion}"
 
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core',  version: '2.8.8'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind',  version: '2.8.8'
-    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8',  version: '2.8.8'
-    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310',  version: '2.8.8'
-
-    compile group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: '2.7'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.7'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.7'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.7'
+    compile "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
+    compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
+    compile "com.fasterxml.jackson.module:jackson-module-afterburner:${jacksonVersion}"
+    
+    compile "org.slf4j:slf4j-simple:1.7.26"
+    compile "org.apache.logging.log4j:log4j-1.2-api:${log4jVersion}"
+    compile "org.apache.logging.log4j:log4j-api:${log4jVersion}"
+    compile "org.apache.logging.log4j:log4j-core:${log4jVersion}"
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     deployerJars "org.apache.maven.wagon:wagon-http:2.2"

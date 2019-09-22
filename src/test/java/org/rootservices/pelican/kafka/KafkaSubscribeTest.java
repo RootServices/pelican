@@ -21,6 +21,7 @@ public class KafkaSubscribeTest {
     @Before
     public void setUp() {
         appConfig = new PelicanAppConfig();
+        appConfig.setMessageQueueHost("localhost:9092");
     }
 
 

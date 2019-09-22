@@ -7,8 +7,6 @@ services:
     build:
       context: .
       dockerfile: docker/kafka/Dockerfile
-    networks:
-      - pelican
 
   zookeeper:
     container_name: zookeeper
@@ -18,20 +16,13 @@ services:
       dockerfile: Dockerfile
     ports:
       - 2181:2181
-    networks:
-      - pelican
 
-  kafka-server:
-    container_name: kafka-server
-    image: rs/kafka-server
+  kafka-broker:
+    container_name: kafka-broker
+    image: rs/kafka-broker
     build:
-      context: docker/kafka-server
+      context: docker/kafka-broker
       dockerfile: Dockerfile
     ports:
       - 9092:9092
-    networks:
-      - pelican
-
-networks:
-  pelican:
-    driver: bridge
+      - 29092:29092
