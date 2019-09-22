@@ -6,6 +6,7 @@ import org.rootservices.pelican.Publish;
 import org.rootservices.pelican.Subscribe;
 import org.rootservices.pelican.config.PelicanAppConfig;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,8 @@ public class KafkaSubscribeTest {
         Publish publish = appConfig.publish(publishClientId);
         publish.send("test", message);
 
-        List<Map<String, String>> actual = subject.poll(100);
+        Duration timeout = Duration.ofSeconds(100);
+        List<Map<String, String>> actual = subject.poll(timeout);
 
         subject.processed();
 

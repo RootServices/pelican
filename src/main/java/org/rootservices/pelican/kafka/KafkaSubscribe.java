@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.rootservices.pelican.Subscribe;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.*;
 
 
@@ -26,7 +27,7 @@ public class KafkaSubscribe implements Subscribe {
     }
 
     @Override
-    public List<Map<String, String>> poll(long timeout) {
+    public List<Map<String, String>> poll(Duration timeout) {
         List<Map<String, String>> msgs = new ArrayList<>();
         while (true) {
             msgs.clear();
