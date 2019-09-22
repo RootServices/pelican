@@ -9,10 +9,26 @@ export MESSAGE_QUEUE_HOST='localhost:9092'
 
 Executing the tests
 -------------------
-The tests are integration tests and depend that the various message queues are running. See, "Setting up Kafka" section below.
+
+The tests are integration tests and depend on zookeeper and kafka running.
+
+### start zookeeper and kafka ###
+```bash
+$ make build-docker
+$ make start
+```
+
+### create the test topic ###
+
+You'll need to [download kafka](https://kafka.apache.org/downloads) in order to use the shell scripts.
 
 ```bash
-gradle test
+$ bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test
+``` 
+
+### execute the tests ###
+```bash
+./gradlew clean test
 ```
 
 How to Publish

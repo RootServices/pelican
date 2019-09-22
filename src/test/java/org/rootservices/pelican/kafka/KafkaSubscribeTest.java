@@ -46,5 +46,4 @@ public class KafkaSubscribeTest {
         assertThat("message the subscriber got was empty", actual.size(), is(1));
         assertThat("message has a unexpected value for key, test_key", actual.get(0).get("test_key"), is("test_value"));
     }
-
 }

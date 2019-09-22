@@ -20,6 +20,8 @@ services:
   kafka-broker:
     container_name: kafka-broker
     image: rs/kafka-broker
+    depends_on:
+      - zookeeper
     build:
       context: docker/kafka-broker
       dockerfile: Dockerfile
