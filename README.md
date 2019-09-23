@@ -58,57 +58,9 @@ String consumerGroup = "test";
 
 Subscribe subject = appConfig.subscribe(topics, consumerGroup);
 
-Long timeout = 100;
+Duration timeout = Duration.ofSeconds(100);
 List<Map<String, String>> messages = subject.poll(timeout);
 
 // tell the queue the record has been processed.
 subject.processed();
-```
-
-Setting up [Kafka](https://kafka.apache.org/)
-------------------
-Shamelessy stolen from [kafka's quickstart quide](https://kafka.apache.org/quickstart#quickstart_download).
-
-first,[download kafka](https://kafka.apache.org/downloads).
-
-un-tar it
-```bash
-$ tar -xzf kafka_2.11-0.11.0.1.tgz
-$ cd kafka_2.11-0.11.0.1
-```
-
-start zookeeper.
-```bash
-$ bin/zookeeper-server-start.sh config/zookeeper.properties
-```
-
-start kafka server
-```bash
-$ bin/kafka-server-start.sh config/server.properties
-```
-
-create the topic
-```bash
-$ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
-```
-
-verify topic was created
-```bash
-$ bin/kafka-topics.sh --list --zookeeper localhost:2181
-```
-
-start a consumer
-```bash
-$ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
-```
-
-send messages
-```bash
-$ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
-```
-
-Upload the JAR
---------------
-```bash
-$ gradle clean signArchives uploadArchives
 ```
