@@ -18,14 +18,6 @@ $ make build-docker
 $ make start
 ```
 
-### create the test topic ###
-
-You'll need to [download kafka](https://kafka.apache.org/downloads) in order to use the shell scripts.
-
-```bash
-$ bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test
-``` 
-
 ### execute the tests ###
 ```bash
 ./gradlew clean test
