@@ -6,7 +6,7 @@ sourceCompatibility = 12
 targetCompatibility = 12
 
 version = '1.1-SNAPSHOT'
-project.group = 'org.rootservices'
+project.group = 'net.tokensmith'
 archivesBaseName = "pelican"
 
 ext{
@@ -110,8 +110,8 @@ publishing {
                 project.ext.ossrhPassword = 'wrongPassword'
             }
             credentials {
-                username = ossrhUser
-                password =ossrhPassword
+                username = project.ext.ossrhUser
+                password = project.ext.ossrhPassword
             }
         }
     }

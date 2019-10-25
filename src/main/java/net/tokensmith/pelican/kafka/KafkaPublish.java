@@ -1,13 +1,13 @@
-package org.rootservices.pelican.kafka;
+package net.tokensmith.pelican.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.tokensmith.pelican.Publish;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.rootservices.pelican.Publish;
 
 import java.util.Map;
 import java.util.Properties;
