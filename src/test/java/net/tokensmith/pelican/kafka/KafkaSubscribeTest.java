@@ -1,10 +1,10 @@
-package org.rootservices.pelican.kafka;
+package net.tokensmith.pelican.kafka;
 
+import net.tokensmith.pelican.Publish;
+import net.tokensmith.pelican.config.PelicanAppConfig;
 import org.junit.Before;
 import org.junit.Test;
-import org.rootservices.pelican.Publish;
-import org.rootservices.pelican.Subscribe;
-import org.rootservices.pelican.config.PelicanAppConfig;
+import net.tokensmith.pelican.Subscribe;
 
 import java.time.Duration;
 import java.util.Arrays;

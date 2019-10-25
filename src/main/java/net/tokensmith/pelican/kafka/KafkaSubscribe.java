@@ -1,4 +1,4 @@
-package org.rootservices.pelican.kafka;
+package net.tokensmith.pelican.kafka;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,7 +8,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.rootservices.pelican.Subscribe;
+import net.tokensmith.pelican.Subscribe;
 
 import java.io.IOException;
 import java.time.Duration;

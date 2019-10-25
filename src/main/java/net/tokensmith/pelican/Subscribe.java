@@ -1,4 +1,4 @@
-package org.rootservices.pelican;
+package net.tokensmith.pelican;
 
 import java.time.Duration;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.rootservices.pelican.kafka;
+package net.tokensmith.pelican.kafka;
 
 public enum KafkaProps {
     SERVER ("bootstrap.servers"),

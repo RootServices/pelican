@@ -1,4 +1,4 @@
-package org.rootservices.pelican.config;
+package net.tokensmith.pelican.config;
 
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -6,12 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import net.tokensmith.pelican.Publish;
+import net.tokensmith.pelican.kafka.KafkaPublish;
+import net.tokensmith.pelican.kafka.KafkaSubscribe;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.rootservices.pelican.Publish;
-import org.rootservices.pelican.Subscribe;
-import org.rootservices.pelican.kafka.KafkaProps;
-import org.rootservices.pelican.kafka.KafkaPublish;
-import org.rootservices.pelican.kafka.KafkaSubscribe;
+import net.tokensmith.pelican.Subscribe;
+import net.tokensmith.pelican.kafka.KafkaProps;
 
 import java.util.Collection;
 import java.util.Properties;
