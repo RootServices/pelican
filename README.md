@@ -9,10 +9,18 @@ export MESSAGE_QUEUE_HOST='localhost:9092'
 
 Executing the tests
 -------------------
-The tests are integration tests and depend that the various message queues are running. See, "Setting up Kafka" section below.
 
+The tests are integration tests and depend on zookeeper and kafka running.
+
+### start zookeeper and kafka ###
 ```bash
-gradle test
+$ make build-docker
+$ make start
+```
+
+### execute the tests ###
+```bash
+./gradlew clean test
 ```
 
 How to Publish
@@ -42,48 +50,9 @@ String consumerGroup = "test";
 
 Subscribe subject = appConfig.subscribe(topics, consumerGroup);
 
-Long timeout = 100;
-Map<String, String> message = subject.poll(timeout);
-```
+Duration timeout = Duration.ofSeconds(100);
+List<Map<String, String>> messages = subject.poll(timeout);
 
-Setting up [Kafka](https://kafka.apache.org/)
-------------------
-Shamelessy stolen from [kafka's quickstart quide](https://kafka.apache.org/quickstart#quickstart_download).
-
-first,[download kafka](https://kafka.apache.org/downloads).
-
-un-tar it
-```bash
-$ tar -xzf kafka_2.11-0.11.0.1.tgz
-$ cd kafka_2.11-0.11.0.1
-```
-
-start zookeeper.
-```bash
-$ bin/zookeeper-server-start.sh config/zookeeper.properties
-```
-
-start kafka server
-```bash
-$ bin/kafka-server-start.sh config/server.properties
-```
-
-create the topic
-```bash
-$ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
-```
-
-verify topic was created
-```bash
-$ bin/kafka-topics.sh --list --zookeeper localhost:2181
-```
-
-start a consumer
-```bash
-$ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
-```
-
-send messages
-```bash
-$ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+// tell the queue the record has been processed.
+subject.processed();
 ```

@@ -1,14 +1,15 @@
-package org.rootservices.pelican;
+package net.tokensmith.pelican;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
 public abstract class Worker {
 
-    private Subscribe subscribe;
-    private Long timeout;
+    protected Subscribe subscribe;
+    protected Duration timeout;
 
-    Worker(Subscribe subscribe, Long timeout) {
+    public Worker(Subscribe subscribe, Duration timeout) {
         this.subscribe = subscribe;
         this.timeout = timeout;
     }

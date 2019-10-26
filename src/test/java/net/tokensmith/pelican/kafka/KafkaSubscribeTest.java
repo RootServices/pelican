@@ -1,11 +1,12 @@
-package org.rootservices.pelican.kafka;
+package net.tokensmith.pelican.kafka;
 
+import net.tokensmith.pelican.Publish;
+import net.tokensmith.pelican.config.PelicanAppConfig;
 import org.junit.Before;
 import org.junit.Test;
-import org.rootservices.pelican.Publish;
-import org.rootservices.pelican.Subscribe;
-import org.rootservices.pelican.config.AppConfig;
+import net.tokensmith.pelican.Subscribe;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -16,11 +17,12 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.*;
 
 public class KafkaSubscribeTest {
-    private AppConfig appConfig;
+    private PelicanAppConfig appConfig;
 
     @Before
     public void setUp() {
-        appConfig = new AppConfig();
+        appConfig = new PelicanAppConfig();
+        appConfig.setMessageQueueHost("localhost:9092");
     }
 
 
@@ -37,7 +39,8 @@ public class KafkaSubscribeTest {
         Publish publish = appConfig.publish(publishClientId);
         publish.send("test", message);
 
-        List<Map<String, String>> actual = subject.poll(100);
+        Duration timeout = Duration.ofSeconds(100);
+        List<Map<String, String>> actual = subject.poll(timeout);
 
         subject.processed();
 
@@ -45,5 +48,4 @@ public class KafkaSubscribeTest {
         assertThat("message the subscriber got was empty", actual.size(), is(1));
         assertThat("message has a unexpected value for key, test_key", actual.get(0).get("test_key"), is("test_value"));
     }
-
 }
