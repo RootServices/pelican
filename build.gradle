@@ -5,7 +5,7 @@ apply plugin: 'signing'
 sourceCompatibility = 12
 targetCompatibility = 12
 
-version = '1.1-SNAPSHOT'
+version = '1.1'
 project.group = 'net.tokensmith'
 archivesBaseName = "pelican"
 
