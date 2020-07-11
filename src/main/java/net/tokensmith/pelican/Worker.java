@@ -10,7 +10,6 @@ import java.util.Map;
 public abstract class Worker {
 
     protected Subscribe subscribe;
-    protected Publish publish;
     protected Duration timeout;
 
     public Worker(Subscribe subscribe, Duration timeout) {
