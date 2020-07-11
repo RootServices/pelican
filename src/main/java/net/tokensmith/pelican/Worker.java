@@ -1,4 +1,7 @@
-package net.tokensmith.pelican;
+package net.tokensmith.pelican.worker;
+
+import net.tokensmith.pelican.Publish;
+import net.tokensmith.pelican.Subscribe;
 
 import java.time.Duration;
 import java.util.List;
@@ -7,6 +10,7 @@ import java.util.Map;
 public abstract class Worker {
 
     protected Subscribe subscribe;
+    protected Publish publish;
     protected Duration timeout;
 
     public Worker(Subscribe subscribe, Duration timeout) {

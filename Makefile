@@ -1,8 +1,9 @@
+SHELL := /bin/bash
 
-build-docker:
-	docker-compose up --no-start
+build:
+	docker-compose build
 
-start:
+run:
 	docker-compose up -d
 
 stop:
