@@ -1,4 +1,7 @@
-package net.tokensmith.pelican;
+package net.tokensmith.pelican.worker;
+
+import net.tokensmith.pelican.Publish;
+import net.tokensmith.pelican.Subscribe;
 
 import java.time.Duration;
 import java.util.List;

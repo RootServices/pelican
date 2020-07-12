@@ -1,16 +1,16 @@
-version: '3'
+version: '3.8'
 services:
 
   kafka:
-    container_name: kafka
-    image: rs/kafka
+    container_name: pelican-kafka
+    image: tokensmith/kafka
     build:
       context: .
       dockerfile: docker/kafka/Dockerfile
 
   zookeeper:
-    container_name: zookeeper
-    image: rs/zookeeper
+    container_name: pelican-zookeeper
+    image: tokensmith/zookeeper
     build:
       context: docker/zookeeper
       dockerfile: Dockerfile
@@ -18,8 +18,8 @@ services:
       - 2181:2181
 
   kafka-broker:
-    container_name: kafka-broker
-    image: rs/kafka-broker
+    container_name: pelican-kafka-broker
+    image: tokensmith/kafka-broker
     depends_on:
       - zookeeper
     build:

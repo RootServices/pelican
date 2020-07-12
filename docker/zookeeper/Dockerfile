@@ -1,4 +1,4 @@
-FROM rs/kafka
+FROM tokensmith/kafka
 
 RUN \
     mkdir -p /data/scripts/ && \
