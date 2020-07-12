@@ -69,3 +69,14 @@ List<Map<String, String>> messages = subject.poll(timeout);
 // tell the queue the record has been processed.
 subject.processed();
 ```
+
+Docker
+----------------
+
+This repo also has the definitions for:
+ - [tokensmith/kafka](https://hub.docker.com/repository/docker/tokensmith/kafka)
+ - [tokensmith/kafka-broker](https://hub.docker.com/repository/docker/tokensmith/kafka-broker)
+ - [tokensmith/zookeeper](https://hub.docker.com/repository/docker/tokensmith/zookeeper)
+
+They contain image tags that mirror this project's versions. 
+The images are to be used for local development only and not production ready.
