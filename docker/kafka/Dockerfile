@@ -6,8 +6,8 @@ RUN  \
     apk add --no-cache openjdk11
 
 ARG KAFKA_HOME="/opt/kafka"
-ARG KAFKA_VERSION=2.3.0
-ARG KAFKA_SCALA_VERSION=2.11
+ARG KAFKA_VERSION=2.5.0
+ARG KAFKA_SCALA_VERSION=2.12
 ARG USER_HOME_DIR="/root"
 
 # this could probably go into /usr/local too.

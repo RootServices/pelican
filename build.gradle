@@ -7,15 +7,16 @@ plugins {
 sourceCompatibility = 12
 targetCompatibility = 12
 
-version = '1.1'
+version = '1.2-SNAPSHOT'
 group = 'net.tokensmith'
 description = 'framework to publish and consume messages'
 
 ext{
-    kafkaVersion = '2.3.0'
-    jacksonVersion = '2.9.10'
+    kafkaVersion = '2.5.0'
+    jacksonVersion = '2.11.1'
     log4jVersion = '2.12.1'
     junitVersion = '5.0.0'
+    slf4jVersion = '1.7.26'
 }
 
 repositories {
@@ -38,7 +39,7 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
     compile "com.fasterxml.jackson.module:jackson-module-afterburner:${jacksonVersion}"
     
-    compile "org.slf4j:slf4j-simple:1.7.26"
+    compile "org.slf4j:slf4j-simple:${slf4jVersion}"
     compile "org.apache.logging.log4j:log4j-1.2-api:${log4jVersion}"
     compile "org.apache.logging.log4j:log4j-api:${log4jVersion}"
     compile "org.apache.logging.log4j:log4j-core:${log4jVersion}"
@@ -70,18 +71,18 @@ publishing {
                 name = 'pelican'
                 packaging = 'jar'
                 description = 'framework to publish and consume messages'
-                url = 'https://github.com/RootServices/pelican'
+                url = 'https://github.com/Tokensmith/pelican'
 
                 scm {
-                    connection = 'git@github.com:RootServices/pelican.git'
-                    developerConnection = 'git@github.com:RootServices/pelican.git'
-                    url = 'https://github.com/RootServices/otter'
+                    connection = 'git@github.com:Tokensmith/pelican.git'
+                    developerConnection = 'git@github.com:Tokensmith/pelican.git'
+                    url = 'https://github.com/Tokensmith/otter'
                 }
 
                 licenses {
                     license {
                         name = 'The MIT License (MIT)'
-                        url = 'https://github.com/RootServices/pelican/blob/development/LICENSE'
+                        url = 'https://github.com/Tokensmith/pelican/blob/development/LICENSE'
                     }
                 }
 
@@ -89,7 +90,7 @@ publishing {
                     developer {
                         id = 'tmackenzie'
                         name = 'Tom MacKenzie'
-                        email = 'tom@rootservices.org'
+                        email = 'tom@tokensmith.net'
                     }
                 }
             }

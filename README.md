@@ -1,21 +1,20 @@
 # pelican
-A interface that can implement publishing and consuming messages from various message queue platforms.
+An interface that can implement publishing and consuming messages from various message queue platforms.
 
-Environment Vars
------------------
-```bash
-export MESSAGE_QUEUE_HOST='localhost:9092'
-```
 
 Executing the tests
 -------------------
 
 The tests are integration tests and depend on zookeeper and kafka running.
 
-### start zookeeper and kafka ###
+### run zookeeper and kafka ###
 ```bash
-$ make build-docker
-$ make start
+$ make run
+```
+
+### stop zookeeper and kafka ###
+```bash
+$ make stop
 ```
 
 ### execute the tests ###
@@ -23,11 +22,25 @@ $ make start
 ./gradlew clean test
 ```
 
+Configuration
+-------------------
+
+### Environment Vars
+```bash
+export MESSAGE_QUEUE_HOST='localhost:9092'
+```
+
+### Injection
+```java
+    PelicanAppConfig appConfig = new PelicanAppConfig();
+    appConfig.setMessageQueueHost("localhost:9092");
+```
+
 How to Publish
 ---------------
 
 ```java
-AppConfig appConfig = new AppConfig();
+PelicanAppConfig appConfig = new PelicanAppConfig();
 
 Map<String, String> message = new HashMap<>();
 message.put("test_key", "test_value");
@@ -56,3 +69,15 @@ List<Map<String, String>> messages = subject.poll(timeout);
 // tell the queue the record has been processed.
 subject.processed();
 ```
+
+Docker
+----------------
+
+This repo also has the definitions for:
+ - [tokensmith/kafka](https://hub.docker.com/repository/docker/tokensmith/kafka)
+ - [tokensmith/kafka-broker](https://hub.docker.com/repository/docker/tokensmith/kafka-broker)
+ - [tokensmith/zookeeper](https://hub.docker.com/repository/docker/tokensmith/zookeeper)
+
+They contain image tags that mirror this project's versions.
+ 
+The images are to be used for local development only and not production ready.
