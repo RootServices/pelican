@@ -9,6 +9,7 @@ import org.apache.kafka.common.TopicPartition;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import net.tokensmith.pelican.Subscribe;
+import org.apache.log4j.Priority;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -16,7 +17,7 @@ import java.util.*;
 
 
 public class KafkaSubscribe implements Subscribe {
-    protected static Logger logger = LogManager.getLogger(KafkaSubscribe.class);
+    protected static Logger LOGGER = LogManager.getLogger(KafkaSubscribe.class);
 
     private KafkaConsumer<String, String> consumer;
     private ObjectMapper objectMapper;
@@ -33,23 +34,23 @@ public class KafkaSubscribe implements Subscribe {
             msgs.clear();
 
             Set<TopicPartition> partitions = consumer.assignment();
-            logger.debug("partitions: " + partitions);
+            LOGGER.trace("partitions: " + partitions);
 
-            logger.debug("polling for message");
+            LOGGER.trace("polling for message");
             ConsumerRecords<String, String> records = consumer.poll(timeout);
-            logger.debug("records: " + records.count());
+            LOGGER.trace("records: " + records.count());
 
             for (ConsumerRecord<String, String> record : records) {
                 try {
-                    logger.debug("msg offset: " + record.offset());
+                    LOGGER.trace("msg offset: " + record.offset());
                     Map<String, String> msg = objectMapper.readValue(record.value(), new TypeReference<Map<String, String>>(){});
                     msgs.add(msg);
                 } catch (IOException e) {
-                    logger.error(e.getMessage(), e);
+                    LOGGER.error(e.getMessage(), e);
                 }
             }
             if (msgs.size() > 0) {
-                logger.debug("returning messages");
+                LOGGER.trace("returning messages");
                 return msgs;
             }
         }
