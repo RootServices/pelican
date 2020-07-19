@@ -7,11 +7,11 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import net.tokensmith.pelican.Publish;
+import net.tokensmith.pelican.Subscribe;
+import net.tokensmith.pelican.kafka.KafkaProps;
 import net.tokensmith.pelican.kafka.KafkaPublish;
 import net.tokensmith.pelican.kafka.KafkaSubscribe;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import net.tokensmith.pelican.Subscribe;
-import net.tokensmith.pelican.kafka.KafkaProps;
 
 import java.util.Collection;
 import java.util.Properties;
