@@ -1,10 +1,10 @@
 package net.tokensmith.pelican.kafka;
 
 import net.tokensmith.pelican.Publish;
+import net.tokensmith.pelican.Subscribe;
 import net.tokensmith.pelican.config.PelicanAppConfig;
 import org.junit.Before;
 import org.junit.Test;
-import net.tokensmith.pelican.Subscribe;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -14,7 +14,7 @@ import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class KafkaSubscribeTest {
     private PelicanAppConfig appConfig;
