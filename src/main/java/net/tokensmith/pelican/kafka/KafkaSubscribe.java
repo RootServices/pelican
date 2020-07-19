@@ -9,7 +9,6 @@ import org.apache.kafka.common.TopicPartition;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import net.tokensmith.pelican.Subscribe;
-import org.apache.log4j.Priority;
 
 import java.io.IOException;
 import java.time.Duration;
