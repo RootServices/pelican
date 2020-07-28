@@ -6,14 +6,15 @@ import net.tokensmith.pelican.Publish;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.util.Map;
 import java.util.Properties;
 
 public class KafkaPublish implements Publish {
-    protected static Logger logger = LogManager.getLogger(KafkaPublish.class);
+    protected static Logger logger = LoggerFactory.getLogger(KafkaPublish.class);
 
     Properties properties;
     ObjectMapper objectMapper;
