@@ -7,8 +7,9 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.io.IOException;
 import java.time.Duration;
@@ -19,7 +20,7 @@ import java.util.Set;
 
 
 public class KafkaSubscribe implements Subscribe {
-    protected static Logger LOGGER = LogManager.getLogger(KafkaSubscribe.class);
+    protected static Logger LOGGER = LoggerFactory.getLogger(KafkaSubscribe.class);
 
     private KafkaConsumer<String, String> consumer;
     private ObjectMapper objectMapper;
