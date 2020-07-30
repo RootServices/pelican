@@ -36,7 +36,7 @@ PelicanAppConfig appConfig = new PelicanAppConfig();
 appConfig.setMessageQueueHost("localhost:9092");
 ```
 
-### Change publish or subscribe settings
+### Change publish and subscribe settings
 In order to change the subscribe and publish settings implement a local `PelicanAppConfig` and override the methods, 
 `propertiesForSubscribe`, `propertiesForPublish`. Then use the local implementation to construct publishers and subscribers. 
 
