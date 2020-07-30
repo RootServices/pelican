@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class KafkaSubscribeTest {
 
         String subscribeClientId = "pelican-subscribe-integration-test-1";
         String consumerGroup = "pelican-consumer-group-integration-test-1";
-        Subscribe subject = appConfig.subscribe(Arrays.asList("test"), subscribeClientId, consumerGroup);
+        Subscribe subject = appConfig.subscribe(Collections.singletonList("test"), subscribeClientId, consumerGroup);
 
         String publishClientId = "pelican-publisher-integration-test-1";
         Publish publish = appConfig.publish(publishClientId);
