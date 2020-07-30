@@ -15,12 +15,10 @@ import java.util.Properties;
 public class KafkaPublish implements Publish {
     protected static Logger LOGGER = LoggerFactory.getLogger(KafkaPublish.class);
 
-    private Properties properties;
     private Producer<String, byte[]> producer;
     private ObjectMapper objectMapper;
 
-    public KafkaPublish(Properties properties, ObjectMapper objectMapper, Producer<String, byte[]> producer) {
-        this.properties = properties;
+    public KafkaPublish(ObjectMapper objectMapper, Producer<String, byte[]> producer) {
         this.objectMapper = objectMapper;
         this.producer = producer;
     }

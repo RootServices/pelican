@@ -85,7 +85,6 @@ public class PelicanAppConfig {
     public Publish publish(String clientId) {
         Properties props = propertiesForPublish(clientId);
         return new KafkaPublish(
-            props,
             objectMapper(),
             new KafkaProducer<>(props)
         );
