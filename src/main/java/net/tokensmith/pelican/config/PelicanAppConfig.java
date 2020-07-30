@@ -12,6 +12,7 @@ import net.tokensmith.pelican.kafka.KafkaProps;
 import net.tokensmith.pelican.kafka.KafkaPublish;
 import net.tokensmith.pelican.kafka.KafkaSubscribe;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.producer.KafkaProducer;
 
 import java.util.Collection;
 import java.util.Properties;
@@ -82,7 +83,12 @@ public class PelicanAppConfig {
         return props;
     }
     public Publish publish(String clientId) {
-        return new KafkaPublish(propertiesForPublish(clientId), objectMapper());
+        Properties props = propertiesForPublish(clientId);
+        return new KafkaPublish(
+            props,
+            objectMapper(),
+            new KafkaProducer<>(props)
+        );
     }
 
     public KafkaConsumer<String, String> consumer(Collection<String> topics, String clientId, String consumerGroup){

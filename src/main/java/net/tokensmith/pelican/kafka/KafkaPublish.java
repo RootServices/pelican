@@ -16,12 +16,14 @@ import java.util.Properties;
 public class KafkaPublish implements Publish {
     protected static Logger logger = LoggerFactory.getLogger(KafkaPublish.class);
 
-    Properties properties;
-    ObjectMapper objectMapper;
+    private Properties properties;
+    private Producer<String, byte[]> producer;
+    private ObjectMapper objectMapper;
 
-    public KafkaPublish(Properties properties, ObjectMapper objectMapper) {
+    public KafkaPublish(Properties properties, ObjectMapper objectMapper, Producer<String, byte[]> producer) {
         this.properties = properties;
         this.objectMapper = objectMapper;
+        this.producer = producer;
     }
 
     @Override
@@ -33,12 +35,14 @@ public class KafkaPublish implements Publish {
         } catch (JsonProcessingException e) {
             logger.error(e.getMessage(), e);
         }
-
-        Producer<String, byte[]> producer = new KafkaProducer<>(properties);
         producer.send(new ProducerRecord<>(topic, payload));
         logger.debug("sent message");
 
-        producer.close();
         logger.debug("closed connection");
+    }
+
+    @Override
+    public void close() {
+        producer.close();
     }
 }

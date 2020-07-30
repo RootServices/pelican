@@ -4,4 +4,5 @@ import java.util.Map;
 
 public interface Publish {
     void send(String topic, Map<String, String> msg);
+    void close();
 }
