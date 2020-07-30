@@ -32,8 +32,31 @@ export MESSAGE_QUEUE_HOST='localhost:9092'
 
 ### Injection
 ```java
-    PelicanAppConfig appConfig = new PelicanAppConfig();
-    appConfig.setMessageQueueHost("localhost:9092");
+PelicanAppConfig appConfig = new PelicanAppConfig();
+appConfig.setMessageQueueHost("localhost:9092");
+```
+
+### Change publish and subscribe settings
+In order to change the subscribe and publish settings implement a local `PelicanAppConfig` and override the methods, 
+`propertiesForSubscribe`, `propertiesForPublish`. Then use the local implementation to construct publishers and subscribers. 
+
+```java
+public class PubSubConfig extends PelicanAppConfig {
+
+    @Override
+    public Properties propertiesForSubscribe(String clientId, String consumerGroup) {
+        Properties properties = super.propertiesForSubscribe(clientId, consumerGroup);
+        properties.put("my.new.prop.key", "my.new.prop.value");
+        return properties;
+    }
+
+    @Override
+    public Properties propertiesForPublish(String clientId) {
+        Properties properties = super.propertiesForPublish(clientId);
+        properties.put("my.new.prop.key", "my.new.prop.value");
+        return properties;
+    }
+}
 ```
 
 How to Publish
